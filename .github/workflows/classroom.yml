@@ -1,0 +1,32 @@
+name: Automatické testování
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Spustit testy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Stažení kódu
+        uses: actions/checkout@v4
+
+      - name: Nastavení Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalace závislostí
+        run: pip install pytest
+
+      - name: Část 1 – Streaming
+        run: pytest .github/tests/test_streaming.py -v
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+
+      - name: Část 2 – Uživatel
+        run: pytest .github/tests/test_uzivatel.py -v
+        env:
+          PYTHONPATH: ${{ github.workspace }}
