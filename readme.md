@@ -4,25 +4,53 @@
 ## Obsah
 
 ### 1 Streaming
-Uvažuj, že vyvíjíš software pro službu, která nabízí streamování videa. Služba nabízí dva typy pořadů - filmy a seriály. Firma chce evidovat, které filmy a seriály nabízí a jejich žánry. Dále chce u filmů evidovat délku a u seriálů počet episod a délku jedné episody.
 
-Vytvoř program, který bude obsahovat tři třídy - `Pořad`, `Film` a `Seriál`.
-- Třída `Pořad` bude sloužit jako základ pro další třídy. Bude mít atributy určující název a žánr. Oba atributy jsou povinné. K atributům přistupuj výhradně za použití get/set metod.
-- Třída `Film` bude potomkem třídy `Pořad`. Film má kromě názvu a žánru atribut délka a rok vydání.
-- Třída `Seriál` bude potomkem třídy `Pořad`. Má kromě názvu a žánru atributy počet epizod a délka epizody.
+Uvažuj, že vyvíjíš software pro službu, která nabízí streamování videa. Služba nabízí dva typy pořadů – filmy a seriály.
 
-Všem třídám přidej funkci getInfo(), která vypíše informace o pořadu, resp. o filmu a seriálu. Funkce u třídy `Pořad` vypíše název a žánr. Následně tuto funkci využij ve funkcích u tříd Film a Serial a přidej k ní informaci o délce, resp. počtu episod.
+Vytvoř třídy `Porad`, `Film` a `Serial` dle níže uvedené specifikace.
 
-Po naprogramování si vytvoř alespoň jeden objekt reprezentující film a seriál o ověř, že vše funguje.
+**Třída `Porad`**
+- Konstruktor: `__init__(self, nazev, zanr)`
+- Atributy `nazev` a `zanr` jsou soukromé.
+- Metoda `get_info()` vrátí řetězec:
+  ```
+  Název: Inception, Žánr: Sci-fi
+  ```
 
+**Třída `Film`** — potomek třídy `Porad`
+- Konstruktor: `__init__(self, nazev, zanr, delka, rok_vydani)` — `delka` je v minutách
+- Metoda `get_info()` vrátí řetězec:
+  ```
+  Název: Inception, Žánr: Sci-fi, Délka: 148 min, Rok vydání: 2010
+  ```
+- Metoda `celkova_delka()` vrátí celkovou délku filmu v minutách jako `int`.
+
+**Třída `Serial`** — potomek třídy `Porad`
+- Konstruktor: `__init__(self, nazev, zanr, pocet_epizod, delka_epizody)` — `delka_epizody` je v minutách
+- Metoda `get_info()` vrátí řetězec:
+  ```
+  Název: Breaking Bad, Žánr: Drama, Počet epizod: 62, Délka epizody: 47 min
+  ```
+- Metoda `celkova_delka()` vrátí celkovou délku seriálu v minutách jako `int`.
+
+Po naprogramování vytvoř alespoň jeden objekt `Film` a jeden objekt `Serial`, zavolej `get_info()` a ověř správnost výstupů.
+
+---
 
 ### 2 Zhlédnutí
-Služba nyní eviduje uživatele, kteří službu využívají. Vytvoř třídu Uživatel, která bude mít atributy uživatelské jméno a délka sledování (v minutách), který udává celkovou délku pořadů, které uživatel zhlédl. Uživatelské jméno získej jako parametr a délka sledování je na začátku 0.
 
-Třídám Serial a Film přidej funkce pro zjištění celkové délky, která vrátí celkovou délku filmu/seriálu (u seriálu je to počet episod násobený délkou jedné epizody).
+**Třída `Uzivatel`**
+- Konstruktor: `__init__(self, uzivatelske_jmeno)`
+- Celková délka sledování začíná na `0`.
+- Metoda `pridej_zhlednuti(delka)` připočítá délku (v minutách) k celkové délce sledování.
+- Metoda `get_sledovani()` vrátí celkovou délku sledování jako naformátovaný řetězec:
 
-Třídě Uzivatel přidej funkci pro nápočet délky zhlédnutí, která bude mít jeden parametr. Funkce zvýší atribut udávající celkovou délku sledování o hodnotu parametru.
+  | Délka sledování | Výstup |
+  |---|---|
+  | ≥ 1 den | `"2 dní, 3 hodin, 15 minut"` |
+  | ≥ 1 hodina, < 1 den | `"3 hodin, 15 minut"` |
+  | < 1 hodina | `"45 minut"` |
 
-Vytvoř objekt, který reprezentuje nějakého uživatele. Následně zkus uvažovat situaci, že uživatel zhlédne film a seriál, které jsi vytvořil(a) jako objekty. Uživateli připočti délky pořadů k délce sledování. 
+  Je-li počet minut nebo hodin nula, zobrazí se nula, např. `"3 hodin, 0 minut"`.
 
-Zjisti celkovou délku shlédnutí videí uživatele. Výsledek zobraz uživateli v podobě `x dní, x hodin x minut`. Není-li délka shlédnutí alespoň jeden den, část x dní nezobrazuj. Obdobně pro hodiny.
+Vytvoř uživatele a simuluj zhlédnutí filmu a seriálu z předchozí části. Výsledek zobraz pomocí `get_sledovani()`.
